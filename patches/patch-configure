@@ -1,0 +1,370 @@
+$NetBSD: patch-configure,v 1.7 2022/12/27 15:57:01 schmonz Exp $
+
+Ignore result of broken pkg-config version test.
+
+Fix various searches for executables: "type -p" no longer works in
+NetBSD's /bin/sh, nor does it work as expected on some other OSes
+(e.g. DragonFly). As discussed in NetBSD PR bin/54803.
+
+--- configure.orig	2022-12-13 19:20:39.000000000 +0000
++++ configure
+@@ -3072,7 +3072,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -3126,7 +3126,7 @@ printf %s "checking $r version... " >&6;
+ `
+     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ver" >&5
+ printf "%s\n" "$ver" >&6; }
+-    if test "$num" -lt "$min"; then
++    if false; then
+ 
+     eval "REQUIRED"=\"`eval echo \"'$'REQUIRED\" \""$r >=  (installed: $ver)"\"`\"
+ 
+@@ -3140,7 +3140,7 @@ printf "%s\n" "$ver" >&6; }
+     }
+     {printf "%.0f\n", $1*1000000 + $2*1000 + three}'
+ `
+-        if test "$num" -gt "$max"; then
++        if false; then
+ 
+     eval "REQUIRED"=\"`eval echo \"'$'REQUIRED\" \""$r <=  (installed: $ver)"\"`\"
+ 
+@@ -3236,7 +3236,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -3290,7 +3290,7 @@ printf %s "checking $r version... " >&6;
+ `
+     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ver" >&5
+ printf "%s\n" "$ver" >&6; }
+-    if test "$num" -lt "$min"; then
++    if false; then
+ 
+     eval "REQUIRED"=\"`eval echo \"'$'REQUIRED\" \""$r >=  (installed: $ver)"\"`\"
+ 
+@@ -3304,7 +3304,7 @@ printf "%s\n" "$ver" >&6; }
+     }
+     {printf "%.0f\n", $1*1000000 + $2*1000 + three}'
+ `
+-        if test "$num" -gt "$max"; then
++        if false; then
+ 
+     eval "REQUIRED"=\"`eval echo \"'$'REQUIRED\" \""$r <=  (installed: $ver)"\"`\"
+ 
+@@ -3401,7 +3401,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -3455,7 +3455,7 @@ printf %s "checking $r version... " >&6;
+ `
+     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ver" >&5
+ printf "%s\n" "$ver" >&6; }
+-    if test "$num" -lt "$min"; then
++    if false; then
+ 
+     eval "REQUIRED"=\"`eval echo \"'$'REQUIRED\" \""$r >=  (installed: $ver)"\"`\"
+ 
+@@ -3469,7 +3469,7 @@ printf "%s\n" "$ver" >&6; }
+     }
+     {printf "%.0f\n", $1*1000000 + $2*1000 + three}'
+ `
+-        if test "$num" -gt "$max"; then
++        if false; then
+ 
+     eval "REQUIRED"=\"`eval echo \"'$'REQUIRED\" \""$r <=  (installed: $ver)"\"`\"
+ 
+@@ -3500,7 +3500,7 @@ printf %s "checking for python... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+         if ! $exe -V > /dev/null 2>&1 ; then
+             continue
+@@ -5105,7 +5105,7 @@ printf %s "checking for python... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+         if ! $exe -V > /dev/null 2>&1 ; then
+             continue
+@@ -5731,7 +5731,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -6021,7 +6021,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -6115,7 +6115,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -6281,7 +6281,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -6594,7 +6594,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -6760,7 +6760,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -6924,7 +6924,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -7157,7 +7157,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -7880,7 +7880,7 @@ fi
+   test -n "$FONTFORGE" && break
+ done
+ 
+-        if test -n "20110222"; then
++        if false; then
+ 
+     r="`eval echo '$'"FONTFORGE"`"
+     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking $r version" >&5
+@@ -7891,7 +7891,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -8125,7 +8125,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -9028,7 +9028,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -9247,7 +9247,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -9471,7 +9471,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -9717,7 +9717,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -9882,7 +9882,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -10078,7 +10078,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -10247,7 +10247,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -10411,7 +10411,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -10575,7 +10575,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -10739,7 +10739,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -10904,7 +10904,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -11074,7 +11074,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -11239,7 +11239,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -11403,7 +11403,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -11582,7 +11582,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -11788,7 +11788,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -11952,7 +11952,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
+@@ -12116,7 +12116,7 @@ printf %s "checking $r version... " >&6;
+     ## command -v doesn't work in zsh
+     ## command -v "$r" 2>&1
+     ## this test should work in ash, bash, pdksh (ksh), zsh
+-    type -p $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
++    command -v $r 2>/dev/null | tail -n 1 | awk '{print $NF}'
+ `
+     ver=`
+     ## "$exe" --version 2>&1 | grep -v '^$' | head -n 1 | awk '{print $NF}'
